@@ -1,13 +1,24 @@
-let todoList = [];
+let todoList = [
+    {
+        item: 'Buy milk',
+        date: '17/04/2025'
+    },
+    {
+        item: 'Go to versity',
+        date: '17/04/2025'
+    }
+];
 displayItems();
 
 function addTodo() {
     let inputElement = document.querySelector("#todo-input");
+    let dateElement = document.querySelector('#todo-date');
     let todoItem = inputElement.value;
+    let todoDate = dateElement.value;
     console.log(todoItem);
-    todoList.push(todoItem);
+    todoList.push({ item: todoItem, date: todoDate });
     inputElement.value = '';
-
+    dateElement.value = '';
     displayItems();
 }
 
@@ -19,15 +30,19 @@ function addTodo() {
 //     }
 // }
 
-function displayItems(){
+function displayItems() {
     let containerElement = document.querySelector('.todo-container');
-    let newHtml ='';
-    for(let i=0;i<todoList.length;i++){
+    let newHtml = '';
+    for (let i = 0; i < todoList.length; i++) {
+        // let item = todoList[i].item;
+        // let date = todoList[i].date;
+        let { item, date } = todoList[i];
         newHtml += `
-        <div>
-            <span>${todoList[i]}</span>
-            <button onClick="todoList.splice(${i},1); displayItems();">Delete</button>
-        </div>`;
+            <span>${item}</span>
+            <span>${date}</span>
+            <button class="delete-btn" onClick="todoList.splice(${i},1); 
+            displayItems();">Delete</button>
+    `;
     }
-    containerElement.innerHTML=newHtml;
+    containerElement.innerHTML = newHtml;
 }
