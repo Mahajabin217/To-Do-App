@@ -5,30 +5,48 @@ import AppName from "./components/AppName";
 import './App.css';
 import TodoItems from "./components/TodoItems";
 // import TodoItem from "./components/TodoItem";
+import { useState } from 'react';
+import WelcomeMsg from "./components/WelcomeMsg";
 
 
 function App() {
-  const todoItems = [
-    {
-      name: "Buy Milk",
-      date: '4/10/2025',
-    },
-    {
-      name:'Go to versity',
-      date:'4/10/2025',
-    },
-    {
-      name:'Go to market',
-      date:'4/10/2025',
-    },
-  ];
+  // const initialTodoItems = [
+  //   {
+  //     name: "Buy Milk",
+  //     date: '4/10/2025',
+  //   },
+  //   {
+  //     name: 'Go to versity',
+  //     date: '4/10/2025',
+  //   },
+  //   {
+  //     name: 'Go to market',
+  //     date: '4/10/2025',
+  //   },
+  // ];
+
+  // const [todoItems, setTodoItems] = useState(initialTodoItems);
+  const [todoItems, setTodoItems] = useState([]);
+  const handleNewItem = (itemName, itemDate) => {
+    console.log(`New Item Added: ${itemName} Date: ${itemDate}`);
+    const newTodoItems = [...todoItems, { name: itemName, date: itemDate }];
+    setTodoItems(newTodoItems);
+  }
+
+  const handleDeleleItems = (todoItemName) => {
+    const newTodoItems = todoItems.filter(item => item.name !== todoItemName);
+    setTodoItems(newTodoItems);
+    // console.log(`Item Deleted: ${todoItemName}`);
+  }
 
   return (
     <>
       <center className="todo-container">
         <AppName />
-        <AddTodo />
-        <TodoItems todoItems={todoItems}></TodoItems>
+        <AddTodo onNewItem={handleNewItem}></AddTodo>
+        {todoItems.length === 0 && <WelcomeMsg />}
+        <TodoItems todoItems={todoItems} onDeleteClick={handleDeleleItems}></TodoItems>
+
         {/* <div className="items-container">
           <TodoItem todoName="Buy Milk" todoDate="4/20/2025"></TodoItem>
           <TodoItem todoName="Go to versity" todoDate="4/20/2025"></TodoItem>
@@ -36,7 +54,7 @@ function App() {
             <TodoItem2 /> 
           </div> */}
         {/* <div className="container"> */}
-          {/* <div class="row">
+        {/* <div class="row">
             <div class="col-6">
               <input type="text" placeholder="Enter Todo Here" />
             </div>
@@ -48,7 +66,7 @@ function App() {
             </div>
           </div> */}
 
-          {/* <div class="row">
+        {/* <div class="row">
             <div class="col-6">
               Milk
             </div>
@@ -60,7 +78,7 @@ function App() {
             </div>
           </div> */}
 
-          {/* <div class="row">
+        {/* <div class="row">
             <div class="col-6">
               Eggs
             </div>
